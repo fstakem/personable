@@ -15,24 +15,17 @@ from frigg.db.models.api import Base
 from frigg.db.models.base_model import BaseModel
 
 
-class Person(BaseModel, Base):
+class Login(BaseModel, Base):
 
     # Properties
     id                  = Column(Integer, primary_key=True)
-    first_name          = Column(String(100), nullable=False)
-    last_name           = Column(String(100), nullable=False)
-    username            = Column(String(100), nullable=False)
-    salt                = Column(String(512), nullable=False)
-    password            = Column(String(512), nullable=False)
+    login_at            = Column(DateTime, default=datetime.now)
 
     # Constraints
+    person_id           = Column(Integer, ForeignKey('person.id'))
+    auth_device_id      = Column(Integer, ForeignKey('auth_device.id'))
+    login_device_id     = Column(Integer, ForeignKey('login_device.id'))
 
     # Relationships
-    auth_devices        = relationship("AuthDevice", back_populates="person")
-    login_devices       = relationship("LoginDevice", back_populates="person")
-    logins              = relationship("Login", back_populates="person")
 
-    __tablename__ = 'person'
-
-    def create_password():
-        pass
+    __tablename__ = 'login'
