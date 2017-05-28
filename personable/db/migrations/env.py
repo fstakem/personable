@@ -20,6 +20,9 @@ target_metadata = Base.metadata
 
 # Do you need to import models here?
 from personable.db.models.person import Person
+from personable.db.models.auth_device import AuthDevice
+from personable.db.models.login_device import LoginDevice
+from personable.db.models.login_attempt import LoginAttempt
 
 # DB connection str
 from personable.personable import config

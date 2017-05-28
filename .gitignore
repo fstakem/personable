@@ -75,3 +75,6 @@ personable_env/
 # env vars
 env_vars/dev.sh
 env_vars/prod.sh
+
+# static
+personable/api/version_0_0_1/static/libs

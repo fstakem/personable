@@ -15,11 +15,12 @@ from frigg.db.models.api import Base
 from frigg.db.models.base_model import BaseModel
 
 
-class Login(BaseModel, Base):
+class LoginAttempt(BaseModel, Base):
 
     # Properties
     id                  = Column(Integer, primary_key=True)
     login_at            = Column(DateTime, default=datetime.now)
+    successful          = Column(Boolean, default=False, nullable=False)
 
     # Constraints
     person_id           = Column(Integer, ForeignKey('person.id'))
@@ -28,4 +29,4 @@ class Login(BaseModel, Base):
 
     # Relationships
 
-    __tablename__ = 'login'
+    __tablename__ = 'login_attempt'

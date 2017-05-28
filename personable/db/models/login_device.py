@@ -25,6 +25,6 @@ class LoginDevice(BaseModel, Base):
     person_id           = Column(Integer, ForeignKey('person.id'))
 
     # Relationships
-    logins              = relationship("Login", back_populates="login_device")
+    login_attempts      = relationship("LoginAttempt", back_populates="login_device")
 
     __tablename__ = 'login_device'

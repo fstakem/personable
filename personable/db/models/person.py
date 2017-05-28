@@ -30,7 +30,7 @@ class Person(BaseModel, Base):
     # Relationships
     auth_devices        = relationship("AuthDevice", back_populates="person")
     login_devices       = relationship("LoginDevice", back_populates="person")
-    logins              = relationship("Login", back_populates="person")
+    login_attempts      = relationship("LoginAttempt", back_populates="person")
 
     __tablename__ = 'person'
 
