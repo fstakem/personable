@@ -11,6 +11,7 @@ decorator==4.0.11         # via ipython, traitlets
 eralchemy==1.1.0
 flask-restful==0.3.5
 flask-sqlalchemy==2.2
+flask-wtf==0.14.2
 flask==0.12.1
 ipdb==0.10.3
 ipython-genutils==0.2.0   # via traitlets
@@ -39,3 +40,4 @@ sqlalchemy==1.1.9
 traitlets==4.3.2          # via ipython
 wcwidth==0.1.7            # via prompt-toolkit
 werkzeug==0.12.1
+wtforms==2.1

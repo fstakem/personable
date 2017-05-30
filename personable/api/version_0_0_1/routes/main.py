@@ -8,8 +8,6 @@
 
 
 # Libraries
-import os
-
 from flask import Blueprint, render_template, abort
 from flask_restful import Api, Resource, url_for
 from jinja2 import TemplateNotFound
@@ -19,11 +17,11 @@ from personable.api.version_0_0_1.routes.auth_device import AuthDevice, AuthDevi
 from personable.api.version_0_0_1.routes.login_device import LoginDevice, LoginDeviceList
 from personable.api.version_0_0_1.routes.login_attempt import LoginAttempt, LoginAttemptList
 
+from personable.api.version_0_0_1.forms.login_form import LoginForm
+
+
 version_value = '0_0_1'
 version_name = 'app_v' + version_value
-blueprint_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-static_path = os.path.join(blueprint_path, 'static')
-print(static_path)
 
 app_v0_0_1 = Blueprint(version_name, version_name, 
     static_folder='personable/api/version_0_0_1/static', 
@@ -36,7 +34,7 @@ app_v0_0_1 = Blueprint(version_name, version_name,
 def version_hello():
     return 'v0.0.1'
 
-@app_v0_0_1.route('/other/<user>')
+@app_v0_0_1.route('/<user>')
 def user(user):
     try:
         return render_template('user_home.html', user=user)
@@ -50,10 +48,14 @@ def index():
     except TemplateNotFound:
         abort(404)
 
-@app_v0_0_1.route('/login')
+@app_v0_0_1.route('/login', methods=('GET', 'POST'))
 def login():
     try:
-        return render_template('login.html')
+        form = LoginForm()
+        if form.validate_on_submit():
+            return redirect('/')
+
+        return render_template('login.html', form=form)
     except TemplateNotFound:
         abort(404)
 
