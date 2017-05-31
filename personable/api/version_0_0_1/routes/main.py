@@ -18,6 +18,7 @@ from personable.api.version_0_0_1.routes.login_device import LoginDevice, LoginD
 from personable.api.version_0_0_1.routes.login_attempt import LoginAttempt, LoginAttemptList
 
 from personable.api.version_0_0_1.forms.login_form import LoginForm
+from personable.api.version_0_0_1.forms.register_form import RegisterForm
 
 
 version_value = '0_0_1'
@@ -59,10 +60,14 @@ def login():
     except TemplateNotFound:
         abort(404)
 
-@app_v0_0_1.route('/register')
+@app_v0_0_1.route('/register', methods=('GET', 'POST'))
 def register():
     try:
-        return render_template('register.html')
+        form = RegisterForm()
+        if form.validate_on_submit():
+            return redirect('/')
+
+        return render_template('register.html', form=form)
     except TemplateNotFound:
         abort(404)
 
