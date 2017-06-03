@@ -8,14 +8,18 @@
 
 
 # Libraries
-from flask import Blueprint, render_template, abort, request
+from flask import Blueprint, render_template, abort, request, redirect
 from flask_restful import Api, Resource, url_for
 from jinja2 import TemplateNotFound
 
-from personable.api.version_0_0_1.routes.person import Person, PersonList
-from personable.api.version_0_0_1.routes.auth_device import AuthDevice, AuthDeviceList
-from personable.api.version_0_0_1.routes.login_device import LoginDevice, LoginDeviceList
-from personable.api.version_0_0_1.routes.login_attempt import LoginAttempt, LoginAttemptList
+from personable.api.version_0_0_1.controllers.person import Person as PersonController
+from personable.api.version_0_0_1.controllers.person import PersonList as PersonListController
+from personable.api.version_0_0_1.controllers.auth_device import AuthDevice as AuthDeviceController
+from personable.api.version_0_0_1.controllers.auth_device import AuthDeviceList as AuthDeviceListController
+from personable.api.version_0_0_1.controllers.login_device import LoginDevice as LoginDeviceController
+from personable.api.version_0_0_1.controllers.login_device import LoginDeviceList as LoginDeviceListController
+from personable.api.version_0_0_1.controllers.login_attempt import LoginAttempt as LoginAttemptController
+from personable.api.version_0_0_1.controllers.login_attempt import LoginAttemptList as LoginAttemptListController
 
 from personable.api.version_0_0_1.forms.login_form import LoginForm
 from personable.api.version_0_0_1.forms.register_form import RegisterForm
@@ -46,8 +50,10 @@ def index():
 @app_v0_0_1.route('/login', methods=('GET', 'POST'))
 def login():
     form = LoginForm(request.form)
-    
+
     if request.method == 'POST' and form.validate():
+        person = Person()
+
         return redirect('/index')
 
     return render_template('login.html', form=form)
@@ -69,14 +75,14 @@ rest_api = Api(app_v0_0_1)
 
 
 # Basic restful routes
-rest_api.add_resource(Person, '/person/<int:id>')
-rest_api.add_resource(PersonList, '/person/all')
-rest_api.add_resource(AuthDevice, '/auth_device/<int:id>')
-rest_api.add_resource(AuthDeviceList, '/auth_device/all')
-rest_api.add_resource(LoginDevice, '/login_device/<int:id>')
-rest_api.add_resource(LoginDeviceList, '/login_device/all')
-rest_api.add_resource(LoginAttempt, '/login_attempt/<int:id>')
-rest_api.add_resource(LoginAttemptList, '/login_attempt/all')
+rest_api.add_resource(PersonController, '/person/<int:id>')
+rest_api.add_resource(PersonListController, '/person/all')
+rest_api.add_resource(AuthDeviceController, '/auth_device/<int:id>')
+rest_api.add_resource(AuthDeviceListController, '/auth_device/all')
+rest_api.add_resource(LoginDeviceController, '/login_device/<int:id>')
+rest_api.add_resource(LoginDeviceListController, '/login_device/all')
+rest_api.add_resource(LoginAttemptController, '/login_attempt/<int:id>')
+rest_api.add_resource(LoginAttemptListController, '/login_attempt/all')
 
 
 

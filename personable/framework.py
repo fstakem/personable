@@ -15,7 +15,7 @@ import logging
 
 from flask import Flask
 
-from personable.api.version_0_0_1.routes.main import app_v0_0_1
+from personable.api.version_0_0_1.controllers.main import app_v0_0_1
 
 
 # Framework globals
