@@ -37,28 +37,20 @@ def version_hello():
 
 @app_v0_0_1.route('/<user>')
 def user(user):
-    try:
-        return render_template('user_home.html', user=user)
-    except TemplateNotFound:
-        abort(404)
+    return render_template('user_home.html', user=user)
     
 @app_v0_0_1.route('/index')
 def index():
-    try:
-        return render_template('index.html')
-    except TemplateNotFound:
-        abort(404)
+    return render_template('index.html')
 
 @app_v0_0_1.route('/login', methods=('GET', 'POST'))
 def login():
-    try:
-        form = LoginForm()
-        if form.validate_on_submit():
-            return redirect('/')
+    form = LoginForm(request.form)
+    
+    if request.method == 'POST' and form.validate():
+        return redirect('/index')
 
-        return render_template('login.html', form=form)
-    except TemplateNotFound:
-        abort(404)
+    return render_template('login.html', form=form)
 
 @app_v0_0_1.route('/register', methods=('GET', 'POST'))
 def register():
@@ -71,10 +63,7 @@ def register():
 
 @app_v0_0_1.route('/register_device')
 def register_device():
-    try:
-        return render_template('register_device.html')
-    except TemplateNotFound:
-        abort(404)
+    return render_template('register_device.html')
 
 rest_api = Api(app_v0_0_1)
 

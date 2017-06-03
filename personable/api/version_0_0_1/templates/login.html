@@ -42,21 +42,61 @@
 
         <form method="POST" action="/login">
           {{ form.csrf_token }}
+
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.first_name.label }}</div> 
-              <div class="col-md-4">{{ form.first_name(size=20) }}</div>
+              <div class="col-md-3">{{ form.first_name(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.first_name.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.first_name.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
+
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.last_name.label }}</div> 
-              <div class="col-md-4">{{ form.last_name(size=20) }}</div>
+              <div class="col-md-3">{{ form.last_name(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.last_name.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.last_name.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
+
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.username.label }}</div> 
-              <div class="col-md-4">{{ form.username(size=20) }}</div>
+              <div class="col-md-3">{{ form.username(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.username.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.username.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
+
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.password.label }}</div> 
-              <div class="col-md-4">{{ form.password(size=20) }}</div>
+              <div class="col-md-3">{{ form.password(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.password.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.password.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
 
           <div class="row" style="margin-top: 25px">

@@ -40,35 +40,77 @@
       <div class="jumbotron" style="background-color: #2C2F40; padding-top: 25px">
       <h2 style="color:#868EA6; margin-top: 0px; margin-bottom: 30px">Register</h2>
 
-        {% if field.errors %}
-          <ul class=errors>
-          {% for error in field.errors %}
-            <li>{{ error }}</li>
-          {% endfor %}
-          </ul>
-        {% endif %}
-
         <form method="POST" action="/register">
           {{ form.csrf_token }}
+
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.first_name.label }}</div> 
-              <div class="col-md-4">{{ form.first_name(size=20) }}</div>
+              <div class="col-md-3">{{ form.first_name(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.first_name.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.first_name.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
+
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.last_name.label }}</div> 
-              <div class="col-md-4">{{ form.last_name(size=20) }}</div>
+              <div class="col-md-3">{{ form.last_name(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.last_name.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.last_name.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
+
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.username.label }}</div> 
-              <div class="col-md-4">{{ form.username(size=20) }}</div>
+              <div class="col-md-3">{{ form.username(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.username.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.username.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
+
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.password_1.label }}</div> 
-              <div class="col-md-4">{{ form.password_1(size=20) }}</div>
+              <div class="col-md-3">{{ form.password_1(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.password_1.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.password_1.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
+          
           <div class="row" style="margin-bottom: 5px">
               <div class="col-md-2" style="color:#BF9663">{{ form.password_2.label }}</div> 
-              <div class="col-md-4">{{ form.password_2(size=20) }}</div>
+              <div class="col-md-3">{{ form.password_2(size=20) }}</div>
+              <div class="col-md-3" style="margin-left: -120px">
+                {% if form.password_2.errors %}
+                    <ul style="margin-bottom: 5px">
+                      {% for error in form.password_2.errors %}
+                      <li style="color:red;list-style-type: none;">{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                {% endif %}
+              </div>
           </div>
 
           <div class="row" style="margin-top: 25px">
