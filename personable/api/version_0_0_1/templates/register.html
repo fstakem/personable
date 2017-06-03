@@ -24,7 +24,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" style="color: black">Personable</a>
+          <a class="navbar-brand" href="index" style="color: black">Personable</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
@@ -39,6 +39,14 @@
 
       <div class="jumbotron" style="background-color: #2C2F40; padding-top: 25px">
       <h2 style="color:#868EA6; margin-top: 0px; margin-bottom: 30px">Register</h2>
+
+        {% if field.errors %}
+          <ul class=errors>
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
 
         <form method="POST" action="/register">
           {{ form.csrf_token }}
@@ -66,7 +74,7 @@
           <div class="row" style="margin-top: 25px">
               <div class="col-md-1"></div>
               <div class="col-md-3">
-                <input type="submit" class="btn btn-warning" value="Cancel" style="margin-right: 10px">
+                <a href="/index" class="btn btn-warning" role="button" style="margin-right: 10px">Cancel</a>
                 <input type="submit" class="btn btn-info" value="Register">
               </div> 
           </div>

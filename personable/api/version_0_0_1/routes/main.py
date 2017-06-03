@@ -8,7 +8,7 @@
 
 
 # Libraries
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, request
 from flask_restful import Api, Resource, url_for
 from jinja2 import TemplateNotFound
 
@@ -62,14 +62,12 @@ def login():
 
 @app_v0_0_1.route('/register', methods=('GET', 'POST'))
 def register():
-    try:
-        form = RegisterForm()
-        if form.validate_on_submit():
-            return redirect('/')
+    form = RegisterForm(request.form)
 
-        return render_template('register.html', form=form)
-    except TemplateNotFound:
-        abort(404)
+    if request.method == 'POST' and form.validate():
+        return redirect('/index')
+
+    return render_template('register.html', form=form)
 
 @app_v0_0_1.route('/register_device')
 def register_device():
