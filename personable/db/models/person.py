@@ -10,9 +10,10 @@
 # Libraries
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Date, Numeric, Text
+from sqlalchemy.orm import relationship
 
-from frigg.db.models.api import Base
-from frigg.db.models.base_model import BaseModel
+from personable.db.models.api import Base
+from personable.db.models.base_model import BaseModel
 
 
 class Person(BaseModel, Base):

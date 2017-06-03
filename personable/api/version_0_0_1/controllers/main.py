@@ -24,6 +24,9 @@ from personable.api.version_0_0_1.controllers.login_attempt import LoginAttemptL
 from personable.api.version_0_0_1.forms.login_form import LoginForm
 from personable.api.version_0_0_1.forms.register_form import RegisterForm
 
+#from personable.personable.db import db
+from personable.db.models.person import Person
+
 
 version_value = '0_0_1'
 version_name = 'app_v' + version_value
