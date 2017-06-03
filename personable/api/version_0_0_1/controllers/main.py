@@ -9,6 +9,7 @@
 
 # Libraries
 from flask import Blueprint, render_template, abort, request, redirect
+from flask import current_app
 from flask_restful import Api, Resource, url_for
 from jinja2 import TemplateNotFound
 
@@ -24,7 +25,6 @@ from personable.api.version_0_0_1.controllers.login_attempt import LoginAttemptL
 from personable.api.version_0_0_1.forms.login_form import LoginForm
 from personable.api.version_0_0_1.forms.register_form import RegisterForm
 
-#from personable.personable.db import db
 from personable.db.models.person import Person
 
 

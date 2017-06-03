@@ -9,7 +9,7 @@
 
 # Libraries
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Date, Numeric, Text
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Date, Numeric, Text, ForeignKey
 from sqlalchemy.orm import relationship
 
 from personable.db.models.api import Base
