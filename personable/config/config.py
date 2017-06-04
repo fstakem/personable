@@ -25,17 +25,17 @@ def load_config():
 
     # ======== Transform the config file
     config['env'] = env
-    add_path(config)
-    add_db_connection_str(config)
 
-    return config
-
-def add_path(config):
-    project_path = dirname(dirname(abspath(__file__)))
+    project_path = dirname(dirname(dirname(abspath(__file__))))
     config['project_path'] = project_path
     config['app_path'] = os.path.join(project_path, config['app_name'])
 
-def add_db_connection_str(config):
-    db_path = os.path.join(config['app_path'], 'db', config['db_name'])
+
+    db_path = os.path.join(config['app_path'], 'db', 'data', config['db_name'])
+    config['db_path'] = db_path
     db_connect_str = 'sqlite:///{}'.format(db_path)
     config['db_connect_str'] = db_connect_str
+
+    return config
+
+

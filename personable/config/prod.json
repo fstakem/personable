@@ -1,5 +1,5 @@
 {
     "app_name": "personable",
     "version": "0.0.1",
-    "db_name": "prod.db"
+    "db_name": "test"
 }

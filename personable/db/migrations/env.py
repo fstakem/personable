@@ -15,8 +15,8 @@ fileConfig(db_config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from personable.db.models.api import Base
-target_metadata = Base.metadata
+from personable.database import acl_db
+target_metadata = acl_db.metadata
 
 # Do you need to import models here?
 from personable.db.models.person import Person
@@ -25,8 +25,11 @@ from personable.db.models.login_device import LoginDevice
 from personable.db.models.login_attempt import LoginAttempt
 
 # DB connection str
-from personable.personable import config
-db_config.set_main_option('sqlalchemy.url', config['db_connect_str'])
+from personable.personable import app_config
+print(app_config)
+print(app_config['db_connect_str'])
+db_config.set_main_option('sqlalchemy.url', app_config['db_connect_str'])
+print(db_config)
 
 
 def run_migrations_offline():
