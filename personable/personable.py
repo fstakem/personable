@@ -34,7 +34,7 @@ werkzeug_logger.setLevel(logging.ERROR)
 
 # DB info
 db_name         = config['db_name']
-db_path         = os.path.join(config['app_path'], 'db', db_name)
+db_path         = os.path.join(config['app_path'], 'db', 'data', db_name)
 db_connect_str  = 'sqlite:///db/{}'.format(db_path)
 
 # App

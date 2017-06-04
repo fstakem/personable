@@ -9,24 +9,22 @@
 
 # Libraries
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Date, Numeric, Text, ForeignKey
-from sqlalchemy.orm import relationship
 
-from personable.db.models.api import Base
 from personable.db.models.base_model import BaseModel
+from personable.database import acl_db as db
 
 
-class LoginAttempt(BaseModel, Base):
+class LoginAttempt(BaseModel):
 
     # Properties
-    id                  = Column(Integer, primary_key=True)
-    login_at            = Column(DateTime, default=datetime.now)
-    successful          = Column(Boolean, default=False, nullable=False)
+    id                  = db.Column(db.Integer, primary_key=True)
+    login_at            = db.Column(db.DateTime, default=datetime.now)
+    successful          = db.Column(db.Boolean, default=False, nullable=False)
 
     # Constraints
-    person_id           = Column(Integer, ForeignKey('person.id'))
-    auth_device_id      = Column(Integer, ForeignKey('auth_device.id'))
-    login_device_id     = Column(Integer, ForeignKey('login_device.id'))
+    person_id           = db.Column(db.Integer, db.ForeignKey('person.id'))
+    auth_device_id      = db.Column(db.Integer, db.ForeignKey('auth_device.id'))
+    login_device_id     = db.Column(db.Integer, db.ForeignKey('login_device.id'))
 
     # Relationships
 
