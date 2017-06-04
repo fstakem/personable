@@ -26,10 +26,7 @@ from personable.db.models.login_attempt import LoginAttempt
 
 # DB connection str
 from personable.personable import app_config
-print(app_config)
-print(app_config['db_connect_str'])
 db_config.set_main_option('sqlalchemy.url', app_config['db_connect_str'])
-print(db_config)
 
 
 def run_migrations_offline():

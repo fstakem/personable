@@ -54,8 +54,8 @@ def index():
 def login():
     form = LoginForm(request.form)
 
-    #p = Person.query.filter_by(username='fred').first()
-    #print(p)
+    p = Person.query.filter_by(username='fred').first()
+    print(p)
 
     if request.method == 'POST' and form.validate():
         person = Person()

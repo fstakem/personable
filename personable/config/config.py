@@ -30,7 +30,6 @@ def load_config():
     config['project_path'] = project_path
     config['app_path'] = os.path.join(project_path, config['app_name'])
 
-
     db_path = os.path.join(config['app_path'], 'db', 'data', config['db_name'])
     config['db_path'] = db_path
     db_connect_str = 'sqlite:///{}'.format(db_path)
