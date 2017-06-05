@@ -26,6 +26,7 @@ from personable.api.version_0_0_1.forms.login_form import LoginForm
 from personable.api.version_0_0_1.forms.register_form import RegisterForm
 
 from personable.db.models.person import Person
+from personable.database import acl_db as db
 
 
 version_value = '0_0_1'
@@ -54,13 +55,13 @@ def index():
 def login():
     form = LoginForm(request.form)
 
-    p = Person.query.filter_by(username='fred').first()
-    print(p)
-
     if request.method == 'POST' and form.validate():
-        person = Person()
+        p = Person.query.filter_by(username=form.username.data).first()
 
-        return redirect('/index')
+        if not p:
+            form.username.errors.append('Username does not exist')
+        else:
+            return redirect('/index')
 
     return render_template('login.html', form=form)
 
@@ -69,7 +70,23 @@ def register():
     form = RegisterForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        return redirect('/index')
+        p = Person.query.filter_by(username=form.username.data).first()
+
+        if p:
+            form.username.errors.append("Username '%s' has already been taken" % form.username.data)
+            return render_template('register.html', form=form)
+        elif form.password_1.data != form.password_2.data:
+            form.password_1.errors.append('Passwords do not match')
+            return render_template('register.html', form=form)
+
+        new_person = Person(form.first_name.data,
+                            form.last_name.data,
+                            form.username.data,
+                            form.password_1.data)
+        db.session.add(new_person)
+        db.session.commit()
+
+        return redirect('/%s' % form.username.data)
 
     return render_template('register.html', form=form)
 

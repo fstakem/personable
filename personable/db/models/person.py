@@ -33,5 +33,12 @@ class Person(BaseModel):
 
     __tablename__ = 'person'
 
+    def __init__(self, first_name, last_name, username, password):
+        first_name = first_name
+        last_name = last_name
+        username = username
+        salt = 'testy'
+        password = password
+
     def create_password():
         pass
