@@ -77,8 +77,10 @@ class Person(BaseModel):
         return [raw_hashed_str, hashed_str]
 
     def correct_password(self, password):
+        password = password.encode('UTF_8')
+        hashed = self.bcrypt_password_hash.encode('UTF_8')
 
-        if test_pw == real_pw:
+        if bcrypt.hashpw(password, hashed) == hashed:
             return True
-
-        return False
+        else:
+            return False

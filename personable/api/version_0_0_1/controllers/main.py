@@ -61,8 +61,10 @@ def login():
 
         if not p:
             form.username.errors.append('Username does not exist')
+        elif p.correct_password(form.password.data):
+            return redirect('/%s' % p.username)
         else:
-            return redirect('/index')
+            form.password.errors.append('Incorrect password')
 
     return render_template('login.html', form=form)
 
@@ -92,7 +94,7 @@ def register():
         db.session.add(login)
         db.session.commit()
 
-        return redirect('/%s' % form.username.data)
+        return redirect('/%s' % p.username)
 
     return render_template('register.html', form=form)
 
