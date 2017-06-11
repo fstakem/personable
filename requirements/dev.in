@@ -1,6 +1,0 @@
--r base.txt
-
-ipython
-ipdb
-sqlalchemy_schemadisplay
-eralchemy
