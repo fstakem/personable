@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: c7a42005bf18
+Revision ID: c72914afc74a
 Revises: 
-Create Date: 2017-06-06 21:26:10.801126
+Create Date: 2017-06-11 18:09:37.370105
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c7a42005bf18'
+revision = 'c72914afc74a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,8 +25,12 @@ def upgrade():
     sa.Column('first_name', sa.String(length=100), nullable=False),
     sa.Column('last_name', sa.String(length=100), nullable=False),
     sa.Column('username', sa.String(length=100), nullable=False),
+    sa.Column('hash_algorithm', sa.String(length=512), nullable=False),
+    sa.Column('hash_cost', sa.String(length=512), nullable=False),
     sa.Column('salt', sa.String(length=512), nullable=False),
-    sa.Column('password', sa.String(length=512), nullable=False),
+    sa.Column('bcrypt_salt', sa.String(length=512), nullable=False),
+    sa.Column('password_hash', sa.String(length=512), nullable=False),
+    sa.Column('bcrypt_password_hash', sa.String(length=512), nullable=False),
     sa.PrimaryKeyConstraint('person_id')
     )
     op.create_table('auth_device',

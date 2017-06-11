@@ -83,8 +83,11 @@ def register():
         new_person = Person(first_name=form.first_name.data,
                             last_name=form.last_name.data,
                             username=form.username.data,
-                            password=form.password_1.data)
+                            password_hash=form.password_1.data)
         login = LoginAttempt()
+        login.successful = True
+        new_person.login_attempts.append(login)
+
         db.session.add(new_person)
         db.session.add(login)
         db.session.commit()
