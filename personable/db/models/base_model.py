@@ -23,6 +23,9 @@ class BaseModel(db.Model):
 
     __abstract__ = True
 
+    def __int__(**kwargs):
+        super.__init__(**kwargs)
+
     def __repr__(self):
         mapper = object_mapper(self)
         items = [(p.key, getattr(self, p.key))

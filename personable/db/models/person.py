@@ -17,7 +17,7 @@ from personable.database import acl_db as db
 class Person(BaseModel):
 
     # Properties
-    id                  = db.Column(db.Integer, primary_key=True)
+    person_id           = db.Column(db.Integer, primary_key=True)
     first_name          = db.Column(db.String(100), nullable=False)
     last_name           = db.Column(db.String(100), nullable=False)
     username            = db.Column(db.String(100), nullable=False)
@@ -33,12 +33,16 @@ class Person(BaseModel):
 
     __tablename__ = 'person'
 
-    def __init__(self, first_name, last_name, username, password):
-        first_name = first_name
-        last_name = last_name
-        username = username
-        salt = 'testy'
-        password = password
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.first_name = kwargs['first_name']
+        self.last_name = kwargs['last_name']
+        self.username = kwargs['username']
+        self.salt = 'testy'
+        self.password = kwargs['password']
 
-    def create_password():
+    def login(self):
+        pass
+
+    def create_password(self):
         pass

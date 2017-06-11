@@ -1,8 +1,8 @@
-"""Initial db
+"""Initial migration
 
-Revision ID: d327f98189b5
+Revision ID: c7a42005bf18
 Revises: 
-Create Date: 2017-06-04 13:01:15.902289
+Create Date: 2017-06-06 21:26:10.801126
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd327f98189b5'
+revision = 'c7a42005bf18'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,45 +21,45 @@ def upgrade():
     op.create_table('person',
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('person_id', sa.Integer(), nullable=False),
     sa.Column('first_name', sa.String(length=100), nullable=False),
     sa.Column('last_name', sa.String(length=100), nullable=False),
     sa.Column('username', sa.String(length=100), nullable=False),
     sa.Column('salt', sa.String(length=512), nullable=False),
     sa.Column('password', sa.String(length=512), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('person_id')
     )
     op.create_table('auth_device',
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('auth_device_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=256), nullable=False),
     sa.Column('person_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['person_id'], ['person.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.ForeignKeyConstraint(['person_id'], ['person.person_id'], ),
+    sa.PrimaryKeyConstraint('auth_device_id')
     )
     op.create_table('login_device',
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('login_device_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=256), nullable=False),
     sa.Column('person_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['person_id'], ['person.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.ForeignKeyConstraint(['person_id'], ['person.person_id'], ),
+    sa.PrimaryKeyConstraint('login_device_id')
     )
     op.create_table('login_attempt',
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('login_attempt_id', sa.Integer(), nullable=False),
     sa.Column('login_at', sa.DateTime(), nullable=True),
     sa.Column('successful', sa.Boolean(), nullable=False),
     sa.Column('person_id', sa.Integer(), nullable=True),
     sa.Column('auth_device_id', sa.Integer(), nullable=True),
     sa.Column('login_device_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['auth_device_id'], ['auth_device.id'], ),
-    sa.ForeignKeyConstraint(['login_device_id'], ['login_device.id'], ),
-    sa.ForeignKeyConstraint(['person_id'], ['person.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.ForeignKeyConstraint(['auth_device_id'], ['auth_device.auth_device_id'], ),
+    sa.ForeignKeyConstraint(['login_device_id'], ['login_device.login_device_id'], ),
+    sa.ForeignKeyConstraint(['person_id'], ['person.person_id'], ),
+    sa.PrimaryKeyConstraint('login_attempt_id')
     )
     # ### end Alembic commands ###
 

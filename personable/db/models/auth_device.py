@@ -17,13 +17,16 @@ from personable.database import acl_db as db
 class AuthDevice(BaseModel):
 
     # Properties
-    id                  = db.Column(db.Integer, primary_key=True)
+    auth_device_id      = db.Column(db.Integer, primary_key=True)
     name                = db.Column(db.String(256), nullable=False)
 
     # Constraints
-    person_id           = db.Column(db.Integer, db.ForeignKey('person.id'))
+    person_id           = db.Column(db.Integer, db.ForeignKey('person.person_id'))
 
     # Relationships
     login_attempts      = db.relationship("LoginAttempt", backref="auth_device")
 
     __tablename__ = 'auth_device'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
