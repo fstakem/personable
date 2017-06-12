@@ -69,6 +69,7 @@ def login():
             form.username.errors.append('Username does not exist')
         elif p.correct_password(form.password.data):
             session['username'] = p.username
+            p.login()
             return redirect('/%s' % p.username)
         else:
             form.password.errors.append('Incorrect password')
@@ -102,13 +103,7 @@ def register():
                             last_name=form.last_name.data,
                             username=form.username.data,
                             password_hash=form.password_1.data)
-        login = LoginAttempt()
-        login.successful = True
-        new_person.login_attempts.append(login)
-
-        db.session.add(new_person)
-        db.session.add(login)
-        db.session.commit()
+        new_person.login()
         session['username'] = new_person.username
 
         return redirect('/%s' % p.username)

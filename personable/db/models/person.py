@@ -13,6 +13,7 @@ from datetime import datetime
 import bcrypt
 
 from personable.db.models.base_model import BaseModel
+from personable.db.models.login_attempt import LoginAttempt
 from personable.database import acl_db as db
 
 
@@ -84,3 +85,12 @@ class Person(BaseModel):
             return True
         else:
             return False
+
+    def login(self):
+        login = LoginAttempt()
+        login.successful = True
+        self.login_attempts.append(login)
+
+        db.session.add(self)
+        db.session.add(login)
+        db.session.commit()
