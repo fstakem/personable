@@ -8,7 +8,7 @@
 
 
 # Libraries
-from flask import Blueprint, render_template, abort, request, redirect
+from flask import Blueprint, render_template, abort, request, redirect, session
 from flask import current_app
 from flask_restful import Api, Resource, url_for
 from jinja2 import TemplateNotFound
@@ -29,6 +29,8 @@ from personable.db.models.person import Person
 from personable.db.models.login_attempt import LoginAttempt
 from personable.database import acl_db as db
 
+from personable.api.helpers import login_required
+
 
 version_value = '0_0_1'
 version_name = 'app_v' + version_value
@@ -45,6 +47,7 @@ def version_hello():
     return 'v0.0.1'
 
 @app_v0_0_1.route('/<user>')
+@login_required
 def user(user):
     return render_template('user_home.html', user=user)
     
@@ -56,21 +59,34 @@ def index():
 def login():
     form = LoginForm(request.form)
 
+    if request.method == 'GET' and 'username' in session:
+        return redirect('/%s' % session['username'])
+
     if request.method == 'POST' and form.validate():
         p = Person.query.filter_by(username=form.username.data).first()
 
         if not p:
             form.username.errors.append('Username does not exist')
         elif p.correct_password(form.password.data):
+            session['username'] = p.username
             return redirect('/%s' % p.username)
         else:
             form.password.errors.append('Incorrect password')
 
     return render_template('login.html', form=form)
 
+@app_v0_0_1.route('/logout', methods=(['GET']))
+def logout():
+    session.clear()
+
+    return redirect('/index')
+
 @app_v0_0_1.route('/register', methods=('GET', 'POST'))
 def register():
     form = RegisterForm(request.form)
+
+    if request.method == 'GET' and 'username' in session:
+        return redirect('/%s' % session['username'])
 
     if request.method == 'POST' and form.validate():
         p = Person.query.filter_by(username=form.username.data).first()
@@ -93,6 +109,7 @@ def register():
         db.session.add(new_person)
         db.session.add(login)
         db.session.commit()
+        session['username'] = new_person.username
 
         return redirect('/%s' % p.username)
 
