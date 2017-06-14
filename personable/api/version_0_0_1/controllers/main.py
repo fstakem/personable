@@ -21,12 +21,15 @@ from personable.api.version_0_0_1.controllers.login_device import LoginDevice as
 from personable.api.version_0_0_1.controllers.login_device import LoginDeviceList as LoginDeviceListController
 from personable.api.version_0_0_1.controllers.login_attempt import LoginAttempt as LoginAttemptController
 from personable.api.version_0_0_1.controllers.login_attempt import LoginAttemptList as LoginAttemptListController
+from personable.api.version_0_0_1.controllers.bcrypt_login import BcryptLogin as BcryptLoginController
+from personable.api.version_0_0_1.controllers.bcrypt_login import BcryptLoginList as BcryptLoginListController
 
 from personable.api.version_0_0_1.forms.login_form import LoginForm
 from personable.api.version_0_0_1.forms.register_form import RegisterForm
 
 from personable.db.models.person import Person
 from personable.db.models.login_attempt import LoginAttempt
+from personable.db.models.bcrypt_login import BcryptLogin
 from personable.database import acl_db as db
 
 from personable.api.helpers import login_required
@@ -101,8 +104,8 @@ def register():
 
         new_person = Person(first_name=form.first_name.data,
                             last_name=form.last_name.data,
-                            username=form.username.data,
-                            password_hash=form.password_1.data)
+                            username=form.username.data)
+        new_person.create_password(form.password_1.data)
         new_person.login()
         session['username'] = new_person.username
 
@@ -114,10 +117,10 @@ def register():
 def register_device():
     return render_template('register_device.html')
 
-rest_api = Api(app_v0_0_1)
-
 
 # Basic restful routes
+rest_api = Api(app_v0_0_1)
+
 rest_api.add_resource(PersonController, '/person/<int:id>')
 rest_api.add_resource(PersonListController, '/person/all')
 rest_api.add_resource(AuthDeviceController, '/auth_device/<int:id>')
@@ -126,6 +129,8 @@ rest_api.add_resource(LoginDeviceController, '/login_device/<int:id>')
 rest_api.add_resource(LoginDeviceListController, '/login_device/all')
 rest_api.add_resource(LoginAttemptController, '/login_attempt/<int:id>')
 rest_api.add_resource(LoginAttemptListController, '/login_attempt/all')
+rest_api.add_resource(BcryptLoginController, '/bcrypt_login/<int:id>')
+rest_api.add_resource(BcryptLoginListController, '/bcrypt_login/all')
 
 
 
